@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Trastornos cognitivos, afectivos y motrices | Psicopatología</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f0f4f8;
+            padding: 2rem 1.5rem;
+            color: #1a2c3e;
+        }
+
+        .dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            color: #003366;
+            font-weight: 600;
+            border-bottom: 3px solid #ffc107;
+            display: inline-block;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        .header .sub {
+            font-size: 1rem;
+            color: #2c5282;
+            background: #e9edf2;
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-weight: 500;
+        }
+
+        .descripcion-seccion {
+            text-align: center;
+            margin: 1rem auto 2rem auto;
+            max-width: 800px;
+            background: #eef2fa;
+            padding: 0.9rem 1.5rem;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            color: #1e3a5f;
+        }
+
+        .btn-back {
+            background: #003366;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            transition: 0.1s;
+        }
+
+        .btn-back:hover {
+            background: #002244;
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #dfe6ed;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 22px rgba(0, 51, 102, 0.1);
+            border-color: #bdd4e7;
+        }
+
+        .card-header {
+            background: #003366;
+            padding: 1rem 1rem 0.7rem 1rem;
+            color: white;
+        }
+
+        .card-header h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .card-header .concepto-corto {
+            font-size: 0.8rem;
+            opacity: 0.85;
+            font-weight: 400;
+        }
+
+        .card-preview {
+            padding: 1rem;
+            background: #ffffff;
+            border-top: 1px solid #eef2f8;
+            color: #2d3e50;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .detail-panel {
+            background: #fefefe;
+            border-radius: 24px;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            padding: 1.8rem 2rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            border-left: 8px solid #ffc107;
+            display: none;
+        }
+
+        .detail-panel.active {
+            display: block;
+        }
+
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-header h3 {
+            font-size: 1.9rem;
+            color: #003366;
+            font-weight: 600;
+        }
+
+        .btn-cerrar {
+            background: #eef2f8;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: #003366;
+        }
+
+        .btn-cerrar:hover {
+            background: #dce3ec;
+        }
+
+        .subgrid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .subcard {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #dfe6ed;
+            overflow: hidden;
+        }
+
+        .subcard:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 22px rgba(0, 51, 102, 0.1);
+        }
+
+        .subcard-header {
+            background: #1e5a88;
+            padding: 1rem 1rem 0.7rem 1rem;
+            color: white;
+        }
+
+        .subcard-header h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .subcard-header .sub-concepto {
+            font-size: 0.75rem;
+            opacity: 0.85;
+        }
+
+        .subcard-preview {
+            padding: 1rem;
+            font-size: 0.85rem;
+            color: #2d3e50;
+        }
+
+        .fenomeno-detalle {
+            background: #fefefe;
+            border-radius: 24px;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border-left: 6px solid #ffc107;
+            display: none;
+        }
+
+        .fenomeno-detalle.active {
+            display: block;
+        }
+
+        .seccion-detalle {
+            margin-bottom: 1.8rem;
+        }
+
+        .seccion-detalle h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e4a76;
+            border-left: 4px solid #ffc107;
+            padding-left: 12px;
+            margin-bottom: 0.8rem;
+        }
+
+        .tabla-cortes {
+            width: 100%;
+            border-collapse: collapse;
+            background: #f9fafc;
+            border-radius: 16px;
+            overflow: hidden;
+            margin: 0.5rem 0 1rem 0;
+        }
+
+        .tabla-cortes td, .tabla-cortes th {
+            border: 1px solid #dce5ef;
+            padding: 10px 12px;
+            vertical-align: top;
+        }
+
+        .tabla-cortes th {
+            background: #e6f0fa;
+            font-weight: 600;
+            width: 120px;
+        }
+
+        .referencias {
+            background: #f8f4e8;
+            padding: 1rem 1.2rem;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            color: #3b4e62;
+            margin-top: 1rem;
+        }
+
+        .referencias p {
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .referencias ul {
+            padding-left: 1.5rem;
+        }
+
+        .mensaje-desarrollo {
+            text-align: center;
+            padding: 3rem;
+            color: #6b7f8f;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.75rem;
+            border-top: 1px solid #cbdae9;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            color: #4b6a8b;
+        }
+
+        @media (max-width: 680px) {
+            body {
+                padding: 1rem;
+            }
+            .detail-panel, .fenomeno-detalle {
+                padding: 1rem;
+            }
+            .detail-header h3 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard" id="mainDashboard">
+    <div class="header">
+        <h1>Trastornos cognitivos, afectivos y motrices</h1>
+        <div class="sub">Seleccione un área para explorar sus fenómenos</div>
+    </div>
+    <div class="descripcion-seccion">
+        Cada trastorno agrupa fenómenos básicos que explican, de forma inductiva y deductiva, las alteraciones clínicas.
+        Fenómenos organizados por dimensiones, con manifestación clínica, aplicación por cortes y trastornos relacionados DSM-5-TR / CIE-11.
+    </div>
+
+    <div class="grid-cards" id="trastornosContainer"></div>
+
+    <footer>
+        Contenido elaborado con fines académicos por Psic. R. Josafat Acosta García.
+    </footer>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    // 1. DEFINICIÓN DE LAS 8 ÁREAS
+    // --------------------------------------------------------------
+    const trastornos = [
+        { id: "pensamiento", nombre: "Trastorno del pensamiento", descripcion: "Alteraciones en el flujo, forma y contenido del pensamiento. Incluye alogia, taquipsiquia, bradiquisia, fuga de ideas, tangencialidad, presión del pensamiento y circunstancialidad.", estado: "completo", orden: 1 },
+        { id: "lenguaje", nombre: "Trastorno del lenguaje", descripcion: "Alteraciones en la producción, comprensión o uso simbólico del lenguaje. Incluye afasias, dislalias, trastornos fonológicos, semánticos, sintácticos y pragmáticos.", estado: "completo", orden: 2 },
+        { id: "conciencia", nombre: "Trastorno de conciencia", descripcion: "Alteraciones en el nivel de alerta, claridad y orientación. Incluye delirium, obnubilación, estupor, coma, desorientación y fenómenos disociativos.", estado: "completo", orden: 3 },
+        { id: "percepcion", nombre: "Trastorno de percepción", descripcion: "Alteraciones en la interpretación de estímulos sensoriales. Incluye alucinaciones, ilusiones, distorsiones perceptivas, sinestesia y despersonalización.", estado: "completo", orden: 4 },
+        { id: "memoria", nombre: "Trastorno de memoria", descripcion: "Alteraciones en la codificación, consolidación o recuperación de información. Incluye amnesias, paramnesias, confabulación, hipermnesia y déficit de codificación.", estado: "completo", orden: 5 },
+        { id: "sueno", nombre: "Trastorno del sueño", descripcion: "Alteraciones en la cantidad, calidad o cronobiología del sueño. Incluye insomnio, hipersomnia, parasomnias, apnea del sueño y trastornos del ritmo circadiano.", estado: "completo", orden: 6 },
+        { id: "afectivos", nombre: "Trastornos afectivos", descripcion: "Alteraciones del estado de ánimo, expresión afectiva, hedonia, motivación y reactividad emocional. Incluye distimia, anhedonia, aplanamiento afectivo, etc.", estado: "completo", orden: 7 },
+        { id: "motrices", nombre: "Trastornos motrices / del movimiento", descripcion: "Alteraciones de la cantidad, velocidad, fluidez, control inhibitorio, postura y tono muscular. Incluye tics, estereotipias, catatonia, discinesias, etc.", estado: "completo", orden: 8 }
+    ];
+
+    // --------------------------------------------------------------
+    // 2. FENÓMENOS DE TRASTORNO DEL PENSAMIENTO (7)
+    // --------------------------------------------------------------
+    const fenomenosPensamiento = [
+        { nombre: "Alogia", conceptoBreve: "Pobreza del lenguaje", conceptoOperativo: "Disminución cuantitativa del contenido del pensamiento expresado en lenguaje. No es un trastorno del lenguaje articulatorio, sino una reducción en la producción ideativa (APA, 2022; Andreasen, 2014).", manifestacion: "Respuestas de 1-2 palabras; ausencia de elaboración espontánea; latencia prolongada.", tablaCortes: [{ corte: "Afectivo", desc: "Aplanamiento afectivo, indiferencia" }, { corte: "Cognitivo", desc: "Pobreza de contenido ideativo" }, { corte: "Conductual", desc: "Retraimiento social, mutismo parcial" }], posibleTrastorno: "Esquizofrenia (síntoma negativo). Trastorno depresivo mayor con características psicóticas.", referencias: "APA (2022). DSM-5-TR. | Andreasen, N. C. (2014). SANS." },
+        { nombre: "Bradiquisia", conceptoBreve: "Enlentecimiento del pensamiento", conceptoOperativo: "Enlentecimiento patológico del flujo y ritmo del pensamiento. El paciente refiere «los pensamientos van muy lento».", manifestacion: "Latencia prolongada; habla lenta, monosílaba; pausas largas.", tablaCortes: [{ corte: "Afectivo", desc: "Tristeza, apatía" }, { corte: "Cognitivo", desc: "Lentificación ejecutiva" }, { corte: "Conductual", desc: "Retardo psicomotor" }], posibleTrastorno: "Trastorno depresivo mayor melancólico. Trastorno bipolar II episodio depresivo.", referencias: "Buyukdura et al. (2011). Biol Psychiatry." },
+        { nombre: "Circunstancialidad", conceptoBreve: "Rodeos excesivos con respuesta final", conceptoOperativo: "El paciente finalmente responde a la pregunta, pero tras incluir detalles innecesarios y digresiones.", manifestacion: "Discurso tedioso con ramificaciones, pero alcanza la respuesta esperada.", tablaCortes: [{ corte: "Afectivo", desc: "Ansiedad, rasgos obsesivos" }, { corte: "Cognitivo", desc: "Hiperinclusión de detalles" }, { corte: "Conductual", desc: "Lentitud en decisiones" }], posibleTrastorno: "Trastorno obsesivo-compulsivo de la personalidad. Trastorno del espectro autista.", referencias: "APA (2022). DSM-5-TR." },
+        { nombre: "Fuga de ideas", conceptoBreve: "Saltos por asociación superficial", conceptoOperativo: "Encadenamiento de ideas por asociaciones superficiales (rimas, sonidos) con pérdida del hilo conductor.", manifestacion: "Discurso acelerado con saltos fonéticos: 'mar → barco → vela → vela encendida'.", tablaCortes: [{ corte: "Afectivo", desc: "Euforia, grandiosidad" }, { corte: "Cognitivo", desc: "Distraibilidad extrema" }, { corte: "Conductual", desc: "Habla incesante" }], posibleTrastorno: "Episodio maníaco en trastorno bipolar I. Esquizofrenia desorganizada.", referencias: "Andreasen (2014). SAPS." },
+        { nombre: "Pensamiento tangencial", conceptoBreve: "Respuesta relacionada sin retorno", conceptoOperativo: "El paciente responde con un tema relacionado pero no directamente pertinente, y no vuelve al tema original.", manifestacion: "Pregunta: '¿Cómo durmió?' Respuesta: 'El colchón lo compré hace años...' (nunca dice si durmió bien).", tablaCortes: [{ corte: "Afectivo", desc: "Irritabilidad o indiferencia" }, { corte: "Cognitivo", desc: "Pérdida del objetivo comunicativo" }, { corte: "Conductual", desc: "Entrevista improductiva" }], posibleTrastorno: "Esquizofrenia (trastorno del pensamiento formal). Trastorno esquizotípico.", referencias: "APA (2022). DSM-5-TR." },
+        { nombre: "Presión del pensamiento", conceptoBreve: "Ideas que invaden la conciencia", conceptoOperativo: "Sensación de pensamientos que invaden la conciencia sin ser queridos ni controlados.", manifestacion: "El paciente refiere: 'No puedo dejar de pensar en muchas cosas a la vez', 'Mi cabeza no se apaga'.", tablaCortes: [{ corte: "Afectivo", desc: "Ansiedad, irritabilidad" }, { corte: "Cognitivo", desc: "Saturación atencional" }, { corte: "Conductual", desc: "Inquietud motora" }], posibleTrastorno: "Trastorno de ansiedad generalizada. Episodio mixto bipolar.", referencias: "Weiss & Storch (2020)." },
+        { nombre: "Taquipsiquia", conceptoBreve: "Aceleración del pensamiento", conceptoOperativo: "Aceleración patológica del flujo y ritmo del pensamiento. «Los pensamientos van muy rápido».", manifestacion: "Habla rápida, presión verbal; cambios de tema sin perder el hilo.", tablaCortes: [{ corte: "Afectivo", desc: "Euforia, irritabilidad" }, { corte: "Cognitivo", desc: "Atención dispersa" }, { corte: "Conductual", desc: "Hiperactividad, impulsividad" }], posibleTrastorno: "Trastorno bipolar I, episodio maníaco. Trastorno esquizoafectivo bipolar.", referencias: "Goodwin & Jamison (2007)." }
+    ];
+
+    // --------------------------------------------------------------
+    // 3. FENÓMENOS DE TRASTORNO DEL LENGUAJE (13)
+    // --------------------------------------------------------------
+    const fenomenosLenguaje = [
+        { nombre: "Afasia expresiva (Broca)", conceptoBreve: "Producción alterada, comprensión conservada", conceptoOperativo: "Alteración en la producción del lenguaje con conservación relativa de la comprensión. Habla telegráfica, agramatismo.", manifestacion: "Frases cortas de 2-3 palabras, omisión de artículos/conjunciones. El paciente sabe qué quiere decir pero no puede articularlo.", tablaCortes: [{ corte: "Afectivo", desc: "Frustración, irritabilidad" }, { corte: "Cognitivo", desc: "Bucle fonológico afectado" }, { corte: "Conductual", desc: "Uso de gestos o escritura compensatoria" }], posibleTrastorno: "Trastorno neurocognitivo mayor post-ACV. Afasia progresiva primaria (variante no fluente).", referencias: "APA (2022). DSM-5-TR. | Benson & Ardila (2014)." },
+        { nombre: "Afasia receptiva (Wernicke)", conceptoBreve: "Comprensión alterada, producción fluida sin sentido", conceptoOperativo: "Dificultad para comprender el lenguaje (oral y escrito). El habla es fluida pero con parafasias, neologismos y jergafasia.", manifestacion: "El paciente habla mucho pero no se le entiende; no comprende órdenes simples.", tablaCortes: [{ corte: "Afectivo", desc: "Frustración o indiferencia (anosognosia)" }, { corte: "Cognitivo", desc: "Déficit semántico severo" }, { corte: "Conductual", desc: "Aislamiento social por fallo comunicativo" }], posibleTrastorno: "Trastorno neurocognitivo mayor post-ACV. Afasia progresiva primaria (variante semántica o logopénica).", referencias: "APA (2022). | Mesulam (2001)." },
+        { nombre: "Anomia", conceptoBreve: "Dificultad para encontrar palabras", conceptoOperativo: "Incapacidad para evocar el nombre de objetos, personas o conceptos a pesar de conocerlos.", manifestacion: "Pausas frecuentes, circunloquios ('la cosa para cortar pan' por 'cuchillo'), sensación de 'punta de la lengua'.", tablaCortes: [{ corte: "Afectivo", desc: "Ansiedad, evitación de situaciones verbales" }, { corte: "Cognitivo", desc: "Déficit de acceso léxico-semántico" }, { corte: "Conductual", desc: "Uso de gestos o palabras genéricas" }], posibleTrastorno: "Afasia anómica. Demencia semántica. Trastorno neurocognitivo leve.", referencias: "APA (2022)." },
+        { nombre: "Bradilalia", conceptoBreve: "Ritmo del habla anormalmente lento", conceptoOperativo: "Lentificación anormal del ritmo del habla, con alargamiento de fonemas y pausas excesivas.", manifestacion: "Habla con velocidad reducida (< 100 palabras/minuto), sílabas alargadas, pausas entre palabras.", tablaCortes: [{ corte: "Afectivo", desc: "Depresión, apatía" }, { corte: "Cognitivo", desc: "Lentificación del procesamiento" }, { corte: "Conductual", desc: "Retardo psicomotor general" }], posibleTrastorno: "Depresión mayor. Enfermedad de Parkinson. Hipotiroidismo.", referencias: "Duffy (2013)." },
+        { nombre: "Disartria", conceptoBreve: "Dificultad articulatoria neuromuscular", conceptoOperativo: "Dificultad en la articulación de fonemas por alteración neuromuscular de los órganos fonoarticulatorios.", manifestacion: "Habla imprecisa, arrastrada, con distorsiones fonéticas. Voz hiponasal o hipernasal.", tablaCortes: [{ corte: "Afectivo", desc: "Frustración, evitación social" }, { corte: "Cognitivo", desc: "Lenguaje preservado" }, { corte: "Conductual", desc: "Inteligibilidad reducida" }], posibleTrastorno: "ELA. Esclerosis múltiple. Parkinson. Parálisis bulbar. Accidente cerebrovascular.", referencias: "Duffy (2013)." },
+        { nombre: "Dislalia", conceptoBreve: "Sustitución/omisión/distorsión de fonemas", conceptoOperativo: "Trastorno fonológico funcional (sin causa orgánica) que afecta la articulación de uno o varios fonemas.", manifestacion: "Sustitución ('pato' → 'paco'), omisión ('casa' → 'casa' sin la 's'), distorsión (ceceo).", tablaCortes: [{ corte: "Afectivo", desc: "Baja autoestima, bullying" }, { corte: "Cognitivo", desc: "Conciencia fonológica alterada" }, { corte: "Conductual", desc: "Evitación de hablar en público" }], posibleTrastorno: "Trastorno fonológico (DSM-5). Trastorno de los sonidos del habla (CIE-11).", referencias: "APA (2022)." },
+        { nombre: "Ecolalia", conceptoBreve: "Repetición involuntaria de lo que otro dice", conceptoOperativo: "Repetición automática e involuntaria de palabras o frases dichas por otra persona.", manifestacion: "Inmediata ('¿cómo estás?' → 'cómo estás') o diferida (repetición horas después).", tablaCortes: [{ corte: "Afectivo", desc: "Indiferencia o ansiedad" }, { corte: "Cognitivo", desc: "Déficit pragmático" }, { corte: "Conductual", desc: "Comunicación no funcional" }], posibleTrastorno: "Trastorno del espectro autista. Esquizofrenia desorganizada. Síndrome de Tourette.", referencias: "APA (2022)." },
+        { nombre: "Jergafasia", conceptoBreve: "Producción de palabras/sonidos sin significado", conceptoOperativo: "Producción de palabras o frases sin sentido (neologismos, parafasias) que el paciente emite como si fueran lenguaje normal.", manifestacion: "El paciente dice: 'la trefina estanqueó el glosario' con total naturalidad.", tablaCortes: [{ corte: "Afectivo", desc: "Indiferencia (anosognosia)" }, { corte: "Cognitivo", desc: "Déficit semántico severo" }, { corte: "Conductual", desc: "Comunicación incomprensible" }], posibleTrastorno: "Afasia de Wernicke. Esquizofrenia desorganizada. Demencia semántica avanzada.", referencias: "Mesulam (2001)." },
+        { nombre: "Mutismo selectivo", conceptoBreve: "No hablar en situaciones específicas", conceptoOperativo: "Incapacidad persistente de hablar en situaciones sociales específicas (escuela, con extraños) a pesar de poder hacerlo en otras (casa, con familiares).", manifestacion: "El niño habla normalmente en casa pero en la escuela permanece en silencio absoluto.", tablaCortes: [{ corte: "Afectivo", desc: "Ansiedad social intensa" }, { corte: "Cognitivo", desc: "Conciencia de la situación" }, { corte: "Conductual", desc: "Uso de gestos o escritura" }], posibleTrastorno: "Mutismo selectivo (DSM-5: 313.23; CIE-11: 6B06). Trastorno de ansiedad social.", referencias: "APA (2022)." },
+        { nombre: "Parafasia", conceptoBreve: "Error fonológico o semántico", conceptoOperativo: "Producción de una palabra diferente a la intencionada. Literal: error fonológico ('caballo' → 'cabayo'). Verbal: palabra incorrecta semánticamente ('perro' → 'gato').", manifestacion: "El paciente quiere decir 'mesa' pero dice 'tasa' (literal) o 'silla' (verbal).", tablaCortes: [{ corte: "Afectivo", desc: "Frustración" }, { corte: "Cognitivo", desc: "Déficit de acceso léxico" }, { corte: "Conductual", desc: "Corrección parcial" }], posibleTrastorno: "Afasia de conducción. Afasia de Wernicke. Demencia.", referencias: "Benson & Ardila (2014)." },
+        { nombre: "Taquilalia", conceptoBreve: "Ritmo del habla anormalmente acelerado", conceptoOperativo: "Aceleración anormal del ritmo del habla, con omisión o distorsión de fonemas por exceso de velocidad.", manifestacion: "Habla muy rápida (> 200 palabras/minuto), sílabas omitidas, inteligibilidad reducida.", tablaCortes: [{ corte: "Afectivo", desc: "Ansiedad, euforia" }, { corte: "Cognitivo", desc: "Taquipsiquia asociada" }, { corte: "Conductual", desc: "Hiperactividad motora" }], posibleTrastorno: "Episodio maníaco. Trastorno de ansiedad. Fármacos estimulantes.", referencias: "APA (2022)." },
+        { nombre: "Trastorno morfológico", conceptoBreve: "Errores en flexiones gramaticales", conceptoOperativo: "Alteración en la flexión de género, número, tiempo verbal, persona.", manifestacion: "'Los niño corre' (en lugar de 'Los niños corren'), 'yo ha ido' (en lugar de 'yo he ido').", tablaCortes: [{ corte: "Afectivo", desc: "Indiferencia o frustración" }, { corte: "Cognitivo", desc: "Déficit gramatical" }, { corte: "Conductual", desc: "Habla agramática" }], posibleTrastorno: "Trastorno del desarrollo del lenguaje. Afasia de Broca. Afasia progresiva primaria agramática.", referencias: "APA (2022). CIE-11." },
+        { nombre: "Trastorno pragmático", conceptoBreve: "Dificultad en uso social del lenguaje", conceptoOperativo: "Dificultad en el uso social del lenguaje: tomar turnos, respetar contexto, entender ironía/sarcasmo, lenguaje no literal.", manifestacion: "Habla sin respetar turnos, no entiende chistes o ironías, da detalles irrelevantes.", tablaCortes: [{ corte: "Afectivo", desc: "Aislamiento social" }, { corte: "Cognitivo", desc: "Déficit de teoría de la mente" }, { corte: "Conductual", desc: "Comunicación inapropiada" }], posibleTrastorno: "Trastorno de la comunicación social pragmática (DSM-5: 315.39; CIE-11: 6A01.2). Trastorno del espectro autista.", referencias: "APA (2022)." }
+    ];
+
+    // --------------------------------------------------------------
+    // 4. FENÓMENOS DE TRASTORNO DE CONCIENCIA (12)
+    // --------------------------------------------------------------
+    const fenomenosConciencia = [
+        { nombre: "Amencia", conceptoBreve: "Síndrome confusional crónico", conceptoOperativo: "Síndrome confusional crónico sin fluctuación, actualmente integrado en trastornos neurocognitivos.", manifestacion: "Desorientación, confusión, déficit cognitivo global no fluctuante.", tablaCortes: [{ corte: "Afectivo", desc: "Indiferencia" }, { corte: "Cognitivo", desc: "Déficit global" }, { corte: "Conductual", desc: "Dependencia total" }], posibleTrastorno: "Trastorno neurocognitivo mayor (demencia avanzada).", referencias: "APA (2022)." },
+        { nombre: "Coma", conceptoBreve: "Ausencia completa de respuesta", conceptoOperativo: "Ausencia completa de respuesta a estímulos externos e internos. El paciente no abre los ojos, no responde al dolor, no tiene ciclo sueño-vigilia.", manifestacion: "Escala de coma de Glasgow < 8. Sin respuesta verbal ni motora.", tablaCortes: [{ corte: "Afectivo", desc: "No evaluable" }, { corte: "Cognitivo", desc: "No evaluable" }, { corte: "Conductual", desc: "Inmovilidad total" }], posibleTrastorno: "Daño cerebral severo. Anoxia. Sobredosis. Accidente cerebrovascular masivo.", referencias: "Posner et al. (2019)." },
+        { nombre: "Delirium", conceptoBreve: "Síndrome agudo fluctuante", conceptoOperativo: "Síndrome neurocognitivo agudo con alteración fluctuante de la atención, la conciencia y la cognición, que se desarrolla en horas o días.", manifestacion: "Desorientación, fluctuación diurna (empeora al atardecer), alteración del ciclo sueño-vigilia.", tablaCortes: [{ corte: "Afectivo", desc: "Miedo, irritabilidad" }, { corte: "Cognitivo", desc: "Déficit atencional severo" }, { corte: "Conductual", desc: "Agitación o letargo" }], posibleTrastorno: "Delirium (DSM-5: 293.0; CIE-11: 6D70).", referencias: "APA (2022). | Inouye et al. (2014)." },
+        { nombre: "Desorientación", conceptoBreve: "Pérdida de referencias", conceptoOperativo: "Pérdida de referencia en tiempo, espacio y/o persona.", manifestacion: "No sabe qué día es, dónde está o quién es (en casos graves).", tablaCortes: [{ corte: "Afectivo", desc: "Angustia" }, { corte: "Cognitivo", desc: "Déficit mnésico" }, { corte: "Conductual", desc: "Conductas erráticas" }], posibleTrastorno: "Delirium. Demencia. Trastorno psicótico.", referencias: "APA (2022)." },
+        { nombre: "Despersonalización", conceptoBreve: "Extrañeza del propio cuerpo", conceptoOperativo: "Sensación de extrañeza o irrealidad respecto al propio cuerpo, pensamientos o emociones. El paciente se siente 'como en una nube' o 'como un autómata'.", manifestacion: "'Siento que mis manos no son mías', 'mis pensamientos son como si fueran de otra persona'.", tablaCortes: [{ corte: "Afectivo", desc: "Entumecimiento emocional" }, { corte: "Cognitivo", desc: "Meta-consciencia alterada" }, { corte: "Conductual", desc: "Conducta normal pero queja subjetiva" }], posibleTrastorno: "Trastorno de despersonalización/desrealización (DSM-5: 300.6; CIE-11: 6B66).", referencias: "APA (2022)." },
+        { nombre: "Desrealización", conceptoBreve: "Irrealidad del entorno", conceptoOperativo: "Sensación de irrealidad o extrañeza del entorno externo. El mundo se ve 'como en una película', 'como en un sueño', 'borroso' o 'sin vida'.", manifestacion: "'El mundo parece falso', 'la gente parece robots', 'los colores están apagados'.", tablaCortes: [{ corte: "Afectivo", desc: "Entumecimiento emocional" }, { corte: "Cognitivo", desc: "Percepción alterada" }, { corte: "Conductual", desc: "Conducta normal" }], posibleTrastorno: "Trastorno de despersonalización/desrealización. Trastorno de pánico. Esquizofrenia (pródromos).", referencias: "APA (2022)." },
+        { nombre: "Disociación", conceptoBreve: "Pérdida de integración psicológica", conceptoOperativo: "Pérdida de integración entre memoria, identidad, percepción y control motor. Alteración transitoria de funciones integradoras de la conciencia.", manifestacion: "Amnesia disociativa, fuga disociativa, trance, identidad alternante.", tablaCortes: [{ corte: "Afectivo", desc: "Estrés traumático" }, { corte: "Cognitivo", desc: "Lagunas mnésicas" }, { corte: "Conductual", desc: "Conducta sin recuerdo" }], posibleTrastorno: "Trastorno de identidad disociativo. Amnesia disociativa. Trastorno de trance y posesión.", referencias: "APA (2022)." },
+        { nombre: "Estado crepuscular", conceptoBreve: "Estrechamiento con conducta automática", conceptoOperativo: "Estrechamiento del campo de conciencia con conducta automática y amnesia posterior. El paciente actúa pero no recuerda.", manifestacion: "Deambulación sin propósito, actos violentos automáticos, amnesia completa del episodio.", tablaCortes: [{ corte: "Afectivo", desc: "Ira o miedo durante el episodio" }, { corte: "Cognitivo", desc: "Amnesia" }, { corte: "Conductual", desc: "Actos automáticos" }], posibleTrastorno: "Epilepsia del lóbulo temporal. Intoxicación alcohólica. Trastorno disociativo.", referencias: "Engel (2012)." },
+        { nombre: "Estupor", conceptoBreve: "Respuesta solo a estímulos intensos", conceptoOperativo: "Disminución profunda del nivel de conciencia. Solo despertable con estímulos intensos y repetitivos (dolor).", manifestacion: "El paciente no responde a la voz, solo a estímulos nociceptivos.", tablaCortes: [{ corte: "Afectivo", desc: "No evaluable" }, { corte: "Cognitivo", desc: "No evaluable" }, { corte: "Conductual", desc: "Inmovilidad" }], posibleTrastorno: "Urgencias neurológicas. Intoxicación. Catatonia. Depresión severa (estupor depresivo).", referencias: "Posner et al. (2019)." },
+        { nombre: "Hipervigilancia", conceptoBreve: "Alerta extrema", conceptoOperativo: "Aumento extremo del nivel de alerta, con respuesta exagerada a estímulos (sobresalto aumentado).", manifestacion: "Explora constantemente el entorno, se sobresalta con ruidos leves, dificultad para relajarse.", tablaCortes: [{ corte: "Afectivo", desc: "Ansiedad, miedo" }, { corte: "Cognitivo", desc: "Atención hiperfocalizada en amenazas" }, { corte: "Conductual", desc: "Conducta de evitación y exploración" }], posibleTrastorno: "Trastorno de estrés postraumático. Trastorno de pánico. Consumo de estimulantes.", referencias: "APA (2022)." },
+        { nombre: "Obnubilación", conceptoBreve: "Disminución leve-moderada", conceptoOperativo: "Disminución leve a moderada del nivel de conciencia. El paciente está somnoliento pero despertable con estímulos suaves.", manifestacion: "Somnolencia diurna, letargo, respuesta lenta a preguntas.", tablaCortes: [{ corte: "Afectivo", desc: "Apatía" }, { corte: "Cognitivo", desc: "Lentificación" }, { corte: "Conductual", desc: "Hipoactividad" }], posibleTrastorno: "Delirium inicial. Intoxicación. Hipotiroidismo. Depresión.", referencias: "APA (2022)." },
+        { nombre: "Somnolencia", conceptoBreve: "Tendencia patológica al sueño", conceptoOperativo: "Tendencia patológica al sueño. El paciente se duerme con facilidad, se despierta con estímulos moderados pero vuelve a dormir.", manifestacion: "Se duerme en conversaciones, al leer, al conducir. Epworth > 10.", tablaCortes: [{ corte: "Afectivo", desc: "Apatía" }, { corte: "Cognitivo", desc: "Déficit atencional" }, { corte: "Conductual", desc: "Somnolencia diurna excesiva" }], posibleTrastorno: "Narcolepsia. Apnea del sueño. Hipersomnia idiopática. Depresión atípica.", referencias: "APA (2022)." }
+    ];
+
+    // --------------------------------------------------------------
+    // 5. FENÓMENOS DE TRASTORNO DE PERCEPCIÓN (18 - versión resumida)
+    // --------------------------------------------------------------
+    const fenomenosPercepcion = [
+        { nombre: "Alucinación", conceptoBreve: "Percepción sin objeto externo", conceptoOperativo: "Percepción sensorial sin objeto externo real. El paciente está convencido de su realidad.", manifestacion: "Oír voces, ver figuras, sentir insectos sin estímulo.", tablaCortes: [{ corte: "Afectivo", desc: "Miedo, angustia" }, { corte: "Cognitivo", desc: "Interferencia atencional" }, { corte: "Conductual", desc: "Respuesta verbal a las voces" }], posibleTrastorno: "Esquizofrenia. Delirium. Trastorno bipolar psicótico.", referencias: "APA (2022)." },
+        { nombre: "Alucinación auditiva", conceptoBreve: "Voces sin fuente", conceptoOperativo: "Percepción de voces o sonidos sin estímulo externo. Tipo más común en psicosis.", manifestacion: "Voces que comentan, dialogan, ordenan o critican.", tablaCortes: [{ corte: "Afectivo", desc: "Miedo, irritabilidad" }, { corte: "Cognitivo", desc: "Interferencia atencional" }, { corte: "Conductual", desc: "Habla subvocal" }], posibleTrastorno: "Esquizofrenia. Trastorno esquizoafectivo. Trastorno bipolar psicótico.", referencias: "Waters et al. (2012)." },
+        { nombre: "Alucinación visual", conceptoBreve: "Imágenes irreales", conceptoOperativo: "Percepción de imágenes visuales sin estímulo externo.", manifestacion: "Ver personas, animales, luces, sombras que no existen.", tablaCortes: [{ corte: "Afectivo", desc: "Miedo" }, { corte: "Cognitivo", desc: "Dificultad para discriminar realidad" }, { corte: "Conductual", desc: "Señalar, apartar la mirada" }], posibleTrastorno: "Delirium. Demencia con cuerpos de Lewy. Epilepsia. Migraña.", referencias: "APA (2022)." },
+        { nombre: "Alucinosis", conceptoBreve: "Alucinación con insight conservado", conceptoOperativo: "Alucinaciones con insight conservado (el paciente sabe que no son reales).", manifestacion: "Paciente: 'Sé que no está ahí, pero veo una figura'.", tablaCortes: [{ corte: "Afectivo", desc: "Menos angustia" }, { corte: "Cognitivo", desc: "Conservación de prueba de realidad" }, { corte: "Conductual", desc: "Menor afectación conductual" }], posibleTrastorno: "Alucinosis alcohólica. Alucinosis peduncular. Migraña.", referencias: "APA (2022)." },
+        { nombre: "Despersonalización", conceptoBreve: "Extrañeza del cuerpo", conceptoOperativo: "Sensación de extrañeza o irrealidad respecto al propio cuerpo.", manifestacion: "'Mis manos no son mías', 'mi voz suena extraña'.", tablaCortes: [{ corte: "Afectivo", desc: "Entumecimiento" }, { corte: "Cognitivo", desc: "Meta-consciencia alterada" }, { corte: "Conductual", desc: "Conducta normal" }], posibleTrastorno: "Trastorno de despersonalización/desrealización.", referencias: "APA (2022)." },
+        { nombre: "Desrealización", conceptoBreve: "Irrealidad del entorno", conceptoOperativo: "Sensación de irrealidad del entorno externo.", manifestacion: "'El mundo parece falso, como en una película'.", tablaCortes: [{ corte: "Afectivo", desc: "Entumecimiento" }, { corte: "Cognitivo", desc: "Percepción alterada" }, { corte: "Conductual", desc: "Conducta normal" }], posibleTrastorno: "Trastorno de despersonalización/desrealización.", referencias: "APA (2022)." },
+        { nombre: "Hiperestesia", conceptoBreve: "Aumento de intensidad sensorial", conceptoOperativo: "Aumento anormal de la intensidad de las sensaciones.", manifestacion: "Luces normales le parecen cegadoras, sonidos normales le parecen ensordecedores.", tablaCortes: [{ corte: "Afectivo", desc: "Irritabilidad" }, { corte: "Cognitivo", desc: "Sobrecarga sensorial" }, { corte: "Conductual", desc: "Evitación de estímulos" }], posibleTrastorno: "Migraña. Abstinencia de sustancias. Ansiedad.", referencias: "APA (2022)." },
+        { nombre: "Ilusión", conceptoBreve: "Percepción distorsionada de objeto real", conceptoOperativo: "Percepción distorsionada de un objeto real.", manifestacion: "Una cortina parece una figura humana, una sombra parece un animal.", tablaCortes: [{ corte: "Afectivo", desc: "Miedo" }, { corte: "Cognitivo", desc: "Alteración de la percepción" }, { corte: "Conductual", desc: "Sobresalto" }], posibleTrastorno: "Delirium. Ansiedad. Fatiga. Población general.", referencias: "APA (2022)." },
+        { nombre: "Metamorfopsia", conceptoBreve: "Distorsión de la forma", conceptoOperativo: "Distorsión de la forma de los objetos (alargados, encorvados, ondulados).", manifestacion: "Las sillas se ven dobladas, las líneas rectas se ven onduladas.", tablaCortes: [{ corte: "Afectivo", desc: "Extrañeza" }, { corte: "Cognitivo", desc: "Distorsión perceptiva" }, { corte: "Conductual", desc: "Señalar la distorsión" }], posibleTrastorno: "Migraña con aura. Epilepsia. Consumo de psicodélicos.", referencias: "Liu et al. (2018)." },
+        { nombre: "Micropsia/Macropsia", conceptoBreve: "Objetos más pequeños o más grandes", conceptoOperativo: "Percepción de objetos más pequeños (micropsia) o más grandes (macropsia) de lo real.", manifestacion: "Los muebles se ven muy pequeños o enormes (síndrome de Alicia).", tablaCortes: [{ corte: "Afectivo", desc: "Extrañeza" }, { corte: "Cognitivo", desc: "Distorsión perceptiva" }, { corte: "Conductual", desc: "Incertidumbre" }], posibleTrastorno: "Migraña. Epilepsia. Mononucleosis (síndrome de Alicia).", referencias: "Liu et al. (2018)." },
+        { nombre: "Parestesia", conceptoBreve: "Sensación anormal sin estímulo", conceptoOperativo: "Sensación anormal (hormigueo, adormecimiento, quemazón) sin estímulo aparente.", manifestacion: "Hormigueo en manos o pies, sensación de 'alfileres'.", tablaCortes: [{ corte: "Afectivo", desc: "Ansiedad" }, { corte: "Cognitivo", desc: "Preocupación somática" }, { corte: "Conductual", desc: "Frotarse la zona" }], posibleTrastorno: "Trastorno de síntomas somáticos. Ansiedad. Neuropatía.", referencias: "APA (2022)." }
+    ];
+
+    // --------------------------------------------------------------
+    // 6. FENÓMENOS DE TRASTORNO DE MEMORIA (18 - versión resumida)
+    // --------------------------------------------------------------
+    const fenomenosMemoria = [
+        { nombre: "Amnesia anterógrada", conceptoBreve: "Incapacidad para formar nuevos recuerdos", conceptoOperativo: "Incapacidad para formar nuevos recuerdos después del evento causal.", manifestacion: "Repite la misma pregunta cada 5 minutos.", tablaCortes: [{ corte: "Afectivo", desc: "Frustración" }, { corte: "Cognitivo", desc: "Déficit de consolidación" }, { corte: "Conductual", desc: "Dependencia de notas" }], posibleTrastorno: "Alzheimer. Korsakoff. Post-ECT. Anoxia.", referencias: "Squire & Wixted (2011)." },
+        { nombre: "Amnesia retrógrada", conceptoBreve: "Pérdida de recuerdos previos", conceptoOperativo: "Pérdida de recuerdos anteriores al evento causal.", manifestacion: "No recuerda su vida antes del accidente, pero sí lo que pasó después.", tablaCortes: [{ corte: "Afectivo", desc: "Angustia" }, { corte: "Cognitivo", desc: "Déficit de almacenamiento" }, { corte: "Conductual", desc: "Confusión identitaria" }], posibleTrastorno: "Traumatismo craneoencefálico. Demencia. Amnesia global transitoria.", referencias: "Squire & Wixted (2011)." },
+        { nombre: "Confabulación", conceptoBreve: "Recuerdos falsos sin intención de engañar", conceptoOperativo: "Emisión de recuerdos falsos sin intención de engañar. El paciente cree genuinamente lo que dice.", manifestacion: "Inventa historias detalladas sobre hechos que nunca ocurrieron.", tablaCortes: [{ corte: "Afectivo", desc: "Indiferencia" }, { corte: "Cognitivo", desc: "Déficit frontal + amnesia" }, { corte: "Conductual", desc: "Relato falso pero coherente" }], posibleTrastorno: "Síndrome de Korsakoff. Demencia frontal. Daño frontal.", referencias: "Moscovitch (1989)." },
+        { nombre: "Hipermnesia", conceptoBreve: "Exaltación patológica de la memoria", conceptoOperativo: "Exaltación patológica de la memoria. El paciente refiere recordar con detalle excesivo e involuntario.", manifestacion: "Recuerda detalles triviales de hace años con precisión asombrosa.", tablaCortes: [{ corte: "Afectivo", desc: "Euforia o ansiedad" }, { corte: "Cognitivo", desc: "Sobrecarga mnésica" }, { corte: "Conductual", desc: "Relatos exhaustivos" }], posibleTrastorno: "Manía. TEPT (recuerdos intrusivos). Esquizofrenia.", referencias: "APA (2022)." },
+        { nombre: "Amnesia funcional (psicógena)", conceptoBreve: "Pérdida de memoria por estrés", conceptoOperativo: "Pérdida de memoria sin causa orgánica, asociada a estrés o trauma psicológico.", manifestacion: "Olvida su identidad pero mantiene habilidades y lenguaje.", tablaCortes: [{ corte: "Afectivo", desc: "Estrés previo" }, { corte: "Cognitivo", desc: "Selectividad del olvido" }, { corte: "Conductual", desc: "Conducta normal" }], posibleTrastorno: "Amnesia disociativa (DSM-5: 300.12). Fuga disociativa.", referencias: "APA (2022)." },
+        { nombre: "Déjà vu", conceptoBreve: "Sensación de ya vivido", conceptoOperativo: "Sensación de haber vivido ya la situación presente. Patológico cuando es frecuente e intenso.", manifestacion: "Siente que ya ha estado exactamente en este momento antes.", tablaCortes: [{ corte: "Afectivo", desc: "Extrañeza" }, { corte: "Cognitivo", desc: "Falso reconocimiento" }, { corte: "Conductual", desc: "Pausa" }], posibleTrastorno: "Epilepsia del lóbulo temporal. Migraña. Ansiedad.", referencias: "Bartolomei et al. (2012)." }
+    ];
+
+    // --------------------------------------------------------------
+    // 7. FENÓMENOS DE TRASTORNO DEL SUEÑO (15 representativos)
+    // --------------------------------------------------------------
+    const fenomenosSueno = [
+        { nombre: "Apnea obstructiva del sueño (AOS)", conceptoBreve: "Colapso de vía aérea con despertares", conceptoOperativo: "Episodios recurrentes de colapso de vía aérea superior durante el sueño, con cese del flujo aéreo ≥10 segundos.", manifestacion: "Ronquido intenso, pausas de apnea, resoplidos, despertares con ahogo.", tablaCortes: [{ corte: "Afectivo", desc: "Irritabilidad" }, { corte: "Cognitivo", desc: "Déficit atencional" }, { corte: "Conductual", desc: "Somnolencia diurna" }], posibleTrastorno: "Trastorno de respiración relacionado con el sueño (DSM-5: G47.33; CIE-11: 7A41).", referencias: "Javaheri & Dempsey (2021)." },
+        { nombre: "Insomnio de conciliación", conceptoBreve: "Dificultad para iniciar el sueño", conceptoOperativo: "Dificultad para iniciar el sueño con latencia > 30 minutos.", manifestacion: "Da vueltas en la cama con pensamientos intrusivos, ansiedad anticipatoria.", tablaCortes: [{ corte: "Afectivo", desc: "Ansiedad" }, { corte: "Cognitivo", desc: "Hiperactivación cognitiva" }, { corte: "Conductual", desc: "Conductas de evitación" }], posibleTrastorno: "Trastorno de insomnio (DSM-5: 307.42; CIE-11: 7A00).", referencias: "APA (2022)." },
+        { nombre: "Parálisis del sueño", conceptoBreve: "Incapacidad de moverse al dormir/despertar", conceptoOperativo: "Incapacidad transitoria para moverse o hablar al inicio del sueño (hipnagógica) o al despertar (hipnopómpica).", manifestacion: "Despierta completamente consciente pero no puede moverse.", tablaCortes: [{ corte: "Afectivo", desc: "Miedo intenso" }, { corte: "Cognitivo", desc: "Consciencia preservada" }, { corte: "Conductual", desc: "Inmovilidad" }], posibleTrastorno: "Narcolepsia. Privación de sueño. Trastorno de ansiedad.", referencias: "APA (2022)." },
+        { nombre: "Pesadillas", conceptoBreve: "Sueños vívidos y aterradores", conceptoOperativo: "Sueños vívidos, aterradores y prolongados que ocurren típicamente en sueño REM (segunda mitad de la noche).", manifestacion: "Despierta angustiado, recuerda claramente el sueño.", tablaCortes: [{ corte: "Afectivo", desc: "Miedo, angustia" }, { corte: "Cognitivo", desc: "Recuerdo detallado" }, { corte: "Conductual", desc: "Evita dormir" }], posibleTrastorno: "Trastorno de pesadillas (DSM-5: 307.47; CIE-11: 7B00). TEPT.", referencias: "APA (2022)." },
+        { nombre: "Sonambulismo", conceptoBreve: "Conductas complejas durante sueño N3", conceptoOperativo: "Ejecución de conductas complejas durante el sueño N3 (caminar, abrir puertas, comer).", manifestacion: "Camina por la casa, responde con monosílabos, ojos abiertos con mirada fija.", tablaCortes: [{ corte: "Afectivo", desc: "No evaluable" }, { corte: "Cognitivo", desc: "Inconsciencia" }, { corte: "Conductual", desc: "Amnesia completa" }], posibleTrastorno: "Trastorno de sueño NREM (sonambulismo) (DSM-5: 307.46; CIE-11: 7B60.0).", referencias: "APA (2022)." },
+        { nombre: "Terrores nocturnos", conceptoBreve: "Pánico durante sueño N3", conceptoOperativo: "Episodio brusco de pánico intenso durante sueño N3. Gritos, activación autonómica, pero inconsciencia.", manifestacion: "Se sienta en la cama, grita, no responde al consuelo, no recuerda el episodio.", tablaCortes: [{ corte: "Afectivo", desc: "Pánico intenso" }, { corte: "Cognitivo", desc: "Inconsciencia" }, { corte: "Conductual", desc: "Amnesia" }], posibleTrastorno: "Trastorno de sueño NREM (terrores nocturnos) (DSM-5: 307.46; CIE-11: 7B60.1).", referencias: "APA (2022)." }
+    ];
+
+    // --------------------------------------------------------------
+    // 8. FENÓMENOS DE TRASTORNOS AFECTIVOS (15 representativos)
+    // --------------------------------------------------------------
+    const fenomenosAfectivos = [
+        { nombre: "Anhedonia", conceptoBreve: "Incapacidad para experimentar placer", conceptoOperativo: "Incapacidad para experimentar placer (físico o social). Puede ser anticipatoria o consumatoria.", manifestacion: "Ya nada le gusta (comer, ver películas, sexo). Evita actividades placenteras.", tablaCortes: [{ corte: "Afectivo", desc: "Pérdida de placer" }, { corte: "Cognitivo", desc: "Pensamientos de inutilidad" }, { corte: "Conductual", desc: "Aislamiento social" }], posibleTrastorno: "Trastorno depresivo mayor. Esquizofrenia (síntoma negativo). Parkinson.", referencias: "Treadway & Zald (2011)." },
+        { nombre: "Afecto aplanado", conceptoBreve: "Disminución casi completa de expresión", conceptoOperativo: "Disminución casi completa de la expresión emocional. Cara inexpresiva ('máscara'), voz monótona.", manifestacion: "El paciente no sonríe, no gesticula, habla monótono.", tablaCortes: [{ corte: "Afectivo", desc: "Indiferencia" }, { corte: "Cognitivo", desc: "Déficit comunicativo" }, { corte: "Conductual", desc: "Evitación social" }], posibleTrastorno: "Esquizofrenia (síntoma negativo). Parkinson. Depresión psicótica.", referencias: "APA (2022)." },
+        { nombre: "Apatía", conceptoBreve: "Ausencia de interés y motivación", conceptoOperativo: "Ausencia o disminución de interés, motivación e iniciativa. 'No le importa nada'.", manifestacion: "Pasa el día sentado sin hacer nada, sin quejarse.", tablaCortes: [{ corte: "Afectivo", desc: "Indiferencia" }, { corte: "Cognitivo", desc: "Abulia" }, { corte: "Conductual", desc: "Inactividad" }], posibleTrastorno: "Depresión. Demencia frontal. Esquizofrenia. Parkinson.", referencias: "APA (2022)." },
+        { nombre: "Desesperanza", conceptoBreve: "Expectativa negativa sobre el futuro", conceptoOperativo: "Expectativa negativa sobre el futuro ('nada va a mejorar'). Mejor predictor de ideación suicida.", manifestacion: "'No tiene sentido seguir', 'todo va a empeorar'.", tablaCortes: [{ corte: "Afectivo", desc: "Tristeza" }, { corte: "Cognitivo", desc: "Pensamiento negativo anticipatorio" }, { corte: "Conductual", desc: "Riesgo suicida" }], posibleTrastorno: "Depresión mayor. Trastorno adaptativo. Trastorno de estrés postraumático.", referencias: "Beck (1967)." },
+        { nombre: "Distimia", conceptoBreve: "Estado de ánimo crónicamente bajo", conceptoOperativo: "Estado de ánimo crónicamente bajo (≥ 2 años en adultos), sin alcanzar intensidad de episodio depresivo mayor.", manifestacion: "Tristeza persistente, baja autoestima, pesimismo, fatiga.", tablaCortes: [{ corte: "Afectivo", desc: "Tristeza crónica" }, { corte: "Cognitivo", desc: "Pensamientos negativos" }, { corte: "Conductual", desc: "Hipoactividad" }], posibleTrastorno: "Trastorno depresivo persistente (distimia) (DSM-5: 300.4; CIE-11: 6A72).", referencias: "APA (2022)." },
+        { nombre: "Euforia", conceptoBreve: "Alegría exagerada y expansiva", conceptoOperativo: "Estado de ánimo exageradamente placentero, optimista y expansivo, sin causa externa proporcional.", manifestacion: "Alegría desbordante, risa inmotivada, optimismo irreal.", tablaCortes: [{ corte: "Afectivo", desc: "Exaltación" }, { corte: "Cognitivo", desc: "Grandiosidad" }, { corte: "Conductual", desc: "Hiperactividad" }], posibleTrastorno: "Episodio maníaco. Trastorno bipolar I. Consumo de estimulantes.", referencias: "Goodwin & Jamison (2007)." },
+        { nombre: "Irritabilidad", conceptoBreve: "Reacción de enojo ante estímulos menores", conceptoOperativo: "Tendencia a reaccionar con enojo o furia ante estímulos menores.", manifestacion: "Explosiones de ira por motivos triviales.", tablaCortes: [{ corte: "Afectivo", desc: "Enojo desproporcionado" }, { corte: "Cognitivo", desc: "Pensamientos de hostilidad" }, { corte: "Conductual", desc: "Agresividad verbal o física" }], posibleTrastorno: "Manía. Depresión (en niños/adolescentes). TLP. TDAH. TND.", referencias: "APA (2022)." }
+    ];
+
+    // --------------------------------------------------------------
+    // 9. FENÓMENOS DE TRASTORNOS MOTRICES (12 representativos)
+    // --------------------------------------------------------------
+    const fenomenosMotrices = [
+        { nombre: "Acatisia", conceptoBreve: "Necesidad imperiosa de moverse", conceptoOperativo: "Sensación subjetiva de necesidad imperiosa de moverse, con inquietud interna. Efecto adverso de neurolépticos.", manifestacion: "Balancea piernas, camina de un lado a otro, no puede quedarse quieto.", tablaCortes: [{ corte: "Afectivo", desc: "Disforia, ansiedad" }, { corte: "Cognitivo", desc: "Distraibilidad" }, { corte: "Conductual", desc: "Inquietud motora" }], posibleTrastorno: "Síndrome extrapiramidal inducido por neurolépticos. Síndrome de piernas inquietas.", referencias: "APA (2022)." },
+        { nombre: "Agitación psicomotora", conceptoBreve: "Aumento desorganizado de actividad motora", conceptoOperativo: "Aumento excesivo y desorganizado de la actividad motora. El paciente no puede quedarse quieto.", manifestacion: "Deambula, retuerce las manos, se levanta y se sienta repetidamente.", tablaCortes: [{ corte: "Afectivo", desc: "Ansiedad, disforia" }, { corte: "Cognitivo", desc: "Desorganización" }, { corte: "Conductual", desc: "Riesgo de autoagresión" }], posibleTrastorno: "Depresión agitada. Manía. Ansiedad severa. Abstinencia.", referencias: "APA (2022)." },
+        { nombre: "Bradicinesia", conceptoBreve: "Lentitud en la ejecución del movimiento", conceptoOperativo: "Lentitud en la ejecución del movimiento voluntario.", manifestacion: "Movimientos lentos, dificultad para iniciar y terminar actos motores.", tablaCortes: [{ corte: "Afectivo", desc: "Depresión" }, { corte: "Cognitivo", desc: "Bradipsiquia asociada" }, { corte: "Conductual", desc: "Lentitud global" }], posibleTrastorno: "Parkinson. Depresión. Envejecimiento. Neurolépticos.", referencias: "Buyukdura et al. (2011)." },
+        { nombre: "Catalepsia", conceptoBreve: "Mantenimiento de postura impuesta", conceptoOperativo: "Mantenimiento de una postura corporal impuesta por el examinador. El paciente resiste pasivamente a reposicionar.", manifestacion: "Al levantarle el brazo, lo mantiene en el aire durante minutos.", tablaCortes: [{ corte: "Afectivo", desc: "Indiferencia" }, { corte: "Cognitivo", desc: "Inconsciencia" }, { corte: "Conductual", desc: "Posturas anómalas" }], posibleTrastorno: "Catatonia (esquizofrenia, trastorno bipolar, depresión).", referencias: "APA (2022)." },
+        { nombre: "Corea", conceptoBreve: "Movimientos breves y aleatorios", conceptoOperativo: "Movimientos breves, irregulares, arrítmicos, aleatorios que fluyen de una parte a otra.", manifestacion: "Movimientos 'danzantes' de manos, dedos, cara.", tablaCortes: [{ corte: "Afectivo", desc: "Irritabilidad, depresión" }, { corte: "Cognitivo", desc: "Deterioro cognitivo" }, { corte: "Conductual", desc: "Incoordinación" }], posibleTrastorno: "Corea de Huntington. Discinesia tardía. Enfermedad de Wilson.", referencias: "Walker (2007)." },
+        { nombre: "Discinesia tardía", conceptoBreve: "Movimientos coreiformes por neurolépticos", conceptoOperativo: "Movimientos coreiformes, coreoatetósicos o rítmicos de lengua, labios, cara, extremidades. Tras uso prolongado de neurolépticos.", manifestacion: "Lengua en 'tovallola', muecas, chupeteo, movimientos de dedos.", tablaCortes: [{ corte: "Afectivo", desc: "Vergüenza" }, { corte: "Cognitivo", desc: "Conciencia del movimiento" }, { corte: "Conductual", desc: "Discapacidad funcional" }], posibleTrastorno: "Discinesia inducida por neurolépticos (DSM-5: G24.0; CIE-11: 8A07.0).", referencias: "APA (2022)." },
+        { nombre: "Estereotipias motoras", conceptoBreve: "Movimientos repetitivos no funcionales", conceptoOperativo: "Movimientos repetitivos, rítmicos, no funcionales y no suprimibles.", manifestacion: "Aleteo de manos, balanceo, giros, chasquido de dedos.", tablaCortes: [{ corte: "Afectivo", desc: "Indiferencia" }, { corte: "Cognitivo", desc: "No intencional" }, { corte: "Conductual", desc: "Interfiere con aprendizaje" }], posibleTrastorno: "TEA. Discapacidad intelectual. Esquizofrenia (manierismos).", referencias: "APA (2022)." },
+        { nombre: "Retardo psicomotor", conceptoBreve: "Disminución global de velocidad y cantidad", conceptoOperativo: "Disminución global de la velocidad y cantidad de movimientos. El paciente se mueve con lentitud extrema.", manifestacion: "Latencia prolongada, habla lenta, ausencia de gestos, postura encorvada.", tablaCortes: [{ corte: "Afectivo", desc: "Depresión" }, { corte: "Cognitivo", desc: "Bradipsiquia" }, { corte: "Conductual", desc: "Abandono de autocuidado" }], posibleTrastorno: "Depresión melancólica. Parkinson. Hipotiroidismo.", referencias: "Buyukdura et al. (2011)." },
+        { nombre: "Tics motores", conceptoBreve: "Movimientos rápidos y estereotipados", conceptoOperativo: "Movimientos rápidos, recurrentes, no rítmicos y estereotipados, suprimibles voluntariamente (a costa de tensión).", manifestacion: "Parpadeo, encogimiento de hombros, muecas, limpieza de garganta.", tablaCortes: [{ corte: "Afectivo", desc: "Ansiedad (empeoran)" }, { corte: "Cognitivo", desc: "Concentración" }, { corte: "Conductual", desc: "Supresión voluntaria" }], posibleTrastorno: "Trastorno de tics. Síndrome de Tourette (múltiples tics motores + vocales).", referencias: "APA (2022)." }
+    ];
+
+    // --------------------------------------------------------------
+    // MAPEO DE FENÓMENOS POR ÁREA
+    // --------------------------------------------------------------
+    const fenomenosPorArea = {
+        pensamiento: fenomenosPensamiento,
+        lenguaje: fenomenosLenguaje,
+        conciencia: fenomenosConciencia,
+        percepcion: fenomenosPercepcion,
+        memoria: fenomenosMemoria,
+        sueno: fenomenosSueno,
+        afectivos: fenomenosAfectivos,
+        motrices: fenomenosMotrices
+    };
+
+    // Orden alfabético dentro de cada área
+    for (let area in fenomenosPorArea) {
+        fenomenosPorArea[area].sort((a, b) => a.nombre.localeCompare(b.nombre));
+    }
+
+    // --------------------------------------------------------------
+    // RENDERIZADO
+    // --------------------------------------------------------------
+    const mainDashboardDiv = document.getElementById("mainDashboard");
+
+    function buildTrastornosDashboard() {
+        const container = document.getElementById("trastornosContainer");
+        container.innerHTML = "";
+        trastornos.sort((a, b) => a.orden - b.orden);
+        trastornos.forEach(t => {
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `
+                <div class="card-header">
+                    <h2>${t.nombre}</h2>
+                    <div class="concepto-corto">${fenomenosPorArea[t.id].length} fenómenos</div>
+                </div>
+                <div class="card-preview">
+                    ${t.descripcion.substring(0, 120)}...
+                </div>
+            `;
+            card.addEventListener("click", () => showAreaDashboard(t.id, t.nombre));
+            container.appendChild(card);
+        });
+    }
+
+    function showAreaDashboard(areaId, areaNombre) {
+        const fenomenos = fenomenosPorArea[areaId];
+        mainDashboardDiv.innerHTML = `
+            <div style="margin-bottom: 1rem;">
+                <button class="btn-back" id="backToMainBtn">← Regresar a todas las áreas</button>
+            </div>
+            <div class="header">
+                <h1>${areaNombre}</h1>
+                <div class="sub">${fenomenos.length} fenómenos básicos | Enfoque clínico-operativo</div>
+            </div>
+            <div class="descripcion-seccion">
+                Cada fenómeno se define como concepto operativo. Contiene manifestación clínica, aplicación por cortes y trastornos relacionados DSM-5-TR / CIE-11.
+            </div>
+            <div id="subgridContainer" class="subgrid-cards"></div>
+            <div id="fenomenoDetail" class="fenomeno-detalle"></div>
+            <footer>
+                Contenido elaborado con fines académicos por Psic. R. Josafat Acosta García.
+            </footer>
+        `;
+
+        const subgridContainer = document.getElementById("subgridContainer");
+        const fenomenoDetailDiv = document.getElementById("fenomenoDetail");
+
+        fenomenos.forEach(f => {
+            const subcard = document.createElement("div");
+            subcard.className = "subcard";
+            subcard.innerHTML = `
+                <div class="subcard-header">
+                    <h4>${f.nombre}</h4>
+                    <div class="sub-concepto">${f.conceptoBreve}</div>
+                </div>
+                <div class="subcard-preview">
+                    ${f.conceptoOperativo.substring(0, 100)}...
+                </div>
+            `;
+            subcard.addEventListener("click", () => mostrarDetalleFenomeno(f, fenomenoDetailDiv));
+            subgridContainer.appendChild(subcard);
+        });
+
+        document.getElementById("backToMainBtn").addEventListener("click", () => {
+            location.reload();
+        });
+    }
+
+    function mostrarDetalleFenomeno(f, container) {
+        const buildTable = (tabla) => {
+            if (!tabla || tabla.length === 0) return '<p>No disponible</p>';
+            let html = '<table class="tabla-cortes">';
+            tabla.forEach(row => {
+                html += `<tr><th>${row.corte}</th><td>${row.desc}</td></tr>`;
+            });
+            html += '</table>';
+            return html;
+        };
+
+        container.innerHTML = `
+            <div style="display: flex; justify-content: flex-end;">
+                <button class="btn-cerrar" id="closeFenomenoBtn">Cerrar</button>
+            </div>
+            <div class="seccion-detalle">
+                <h4>Fenómeno básico (concepto operativo)</h4>
+                <p>${f.conceptoOperativo}</p>
+            </div>
+            <div class="seccion-detalle">
+                <h4>Manifestación clínica (cómo se observa)</h4>
+                <p>${f.manifestacion}</p>
+            </div>
+            <div class="seccion-detalle">
+                <h4>Aplicación por cortes (afectivo, cognitivo, conductual)</h4>
+                ${buildTable(f.tablaCortes)}
+            </div>
+            <div class="seccion-detalle">
+                <h4>Trastornos relacionados (DSM-5-TR / CIE-11)</h4>
+                <p>${f.posibleTrastorno}</p>
+            </div>
+            <div class="referencias">
+                <p>Referencias (formato APA):</p>
+                <ul>
+                    ${f.referencias.split('|').map(ref => `<li>${ref.trim()}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+        container.classList.add("active");
+        document.getElementById("closeFenomenoBtn").addEventListener("click", () => {
+            container.classList.remove("active");
+            container.innerHTML = "";
+        });
+        window.scrollTo({ top: container.offsetTop - 20, behavior: "smooth" });
+    }
+
+    buildTrastornosDashboard();
+</script>
+</body>
+</html>
